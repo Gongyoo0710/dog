@@ -11,12 +11,12 @@ public class Menu {
     private boolean b = true;
     public void Dogs(dog[] dogs) {
         System.out.println("以下是小狗的全部信息：");
-        System.out.println("编号\t\t颜色\t\t年龄\t\t价格");
+        System.out.println("编号\t\t颜色\t\t\t年龄\t\t价格");
         for (int i = 0; i < dogs.length; i++) {
             if (dogs[i] == null) {
                 break;
             }
-            System.out.println(dogs[i]);
+            System.out.printf("%2d\t\t%-6s\t\t%2d\t\t%4d\n",dogs[i].getId(),dogs[i].getColor(),dogs[i].getAge(),dogs[i].getPrica());
         }
     }
 
@@ -48,8 +48,9 @@ public class Menu {
                        System.out.println("请输入新小狗的售价");
                        int price = scanner.nextInt();
                        int i;
-                       for (i = 0; dogs[i] != null; i++) ;
-                       dog Dog = new dog(i, color, age, price);
+                       for (i = 0; dogs[i] != null; i++);
+                       int sign = dogs[i-1].getId()+1;
+                       dog Dog = new dog(sign, color, age, price);
                        dogs = Service.add(Dog);
                        break;
                     case 3:

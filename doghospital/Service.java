@@ -2,6 +2,7 @@ package doghospital;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Service {
@@ -80,9 +81,18 @@ public class Service {
 
     public static dog[] add(dog Dog) {
         int i;
+        wallet money = new wallet();
+        if(money.getMoney()-Dog.getPrica()<0){
+            System.out.println("您的资金暂时不太够，请换只小狗再买");
+        }else{
         for (i = 0; dogs[i] != null; i++);
-        dogs[i++] = Dog;
-        return dogs;
+        dogs[i] = Dog;
+        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        money.setMoney(money.getMoney() - dogs[i].getPrica());
+        money.setTime("你于" + money.getTime() + time + "买入了小狗" + dogs[i].getId() + "并花出了了" + dogs[i].getPrica() + "元\n");
+
+       }return dogs;
     }
 
     public static void find(int n) {
@@ -124,7 +134,7 @@ public class Service {
             if (!judge)
                 System.out.println("暂时没有该颜色的小狗呦");
         } else if (n == 2) {
-             if (scanner1.hasNextInt() == true) {
+             try {
                 System.out.println("请分别输入你想要小狗的年龄区间（以空格分隔）：");
                 int a = scanner1.nextInt();
                 int b = scanner1.nextInt();
@@ -136,11 +146,12 @@ public class Service {
                         judge = true;
                     }
                 }
-                if (!judge)
-                    System.out.println("暂时没有该年龄区间的小狗呦");
-            } else {
-                System.out.println("输入错误！！！");
-            }
+                if (!judge){
+                    System.out.println("暂时没有该年龄区间的小狗呦");}
+            } catch (InputMismatchException e){
+                 System.out.println("输入错误！！！");
+
+             }
         }
 
 
