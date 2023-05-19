@@ -2,14 +2,13 @@ package doghospital;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Menu {
     Scanner scanner = new Scanner(System.in);
     int choose;
-    private boolean b = true, a = true;
-    Service service = new Service(100);
-
+    private boolean b = true;
     public void Dogs(dog[] dogs) {
         System.out.println("以下是小狗的全部信息：");
         System.out.println("编号\t\t颜色\t\t年龄\t\t价格");
@@ -32,25 +31,27 @@ public class Menu {
             System.out.println("      3    查看钱包");
             System.out.println("      4    直接显示小狗全部信息");
             System.out.println("      5    退出");
-            choose = scanner.nextInt();
-            if (scanner.hasNextInt() == true) {
+
+            try{
+                choose = scanner.nextInt();
                 switch (choose) {
                     case 1:
-                        System.out.println("请问您想给哪只小狗染色");
-                        int n = scanner.nextInt();
-                        dogs = Service.change(n);
-                        break;
+                         System.out.println("请问您想给哪只小狗染色");
+                         int n = scanner.nextInt();
+                         dogs = Service.change(n);
+                         break;
                     case 2:
                         System.out.println("请输入新小狗的颜色");
                         String color = scanner.next();
                         System.out.println("请输入新小狗的年纪");
-                        int age = scanner.nextInt();
-                        System.out.println("请输入新小狗的售价");
-                        int price = scanner.nextInt();
-                        int i;
-                        for (i = 0; dogs[i] != null; i++) ;
-                        dog Dog = new dog(i, color, age, price);
-                        dogs = Service.add(Dog);
+                       int age = scanner.nextInt();
+                       System.out.println("请输入新小狗的售价");
+                       int price = scanner.nextInt();
+                       int i;
+                       for (i = 0; dogs[i] != null; i++) ;
+                       dog Dog = new dog(i, color, age, price);
+                       dogs = Service.add(Dog);
+                       break;
                     case 3:
                         System.out.println("您现在余额为" + wallet.getMoney() + "(初始资金为100)");
                         System.out.println(wallet.getTime());
@@ -63,9 +64,10 @@ public class Menu {
                     default:
                         System.out.println("输入错误！！！请重新输入");
                 }
-            } else {
+            }catch (InputMismatchException e){
                 System.out.println("输入错误！！！");
-            }
+                break ;
+        }
 
         }return dogs;
     }
@@ -79,8 +81,9 @@ public class Menu {
                 System.out.println("      3    直接显示小狗全部信息");
                 System.out.println("      4    直接购买");
                 System.out.println("      5    退出");
-                choose = scanner.nextInt();
-                if (scanner.hasNextInt() == true) {
+
+                try {
+                    choose = scanner.nextInt();
                     switch (choose) {
                         case 1:
                             Service.find(1);
@@ -101,10 +104,10 @@ public class Menu {
                         default:
                             System.out.println("输入错误！！！请重新输入");
                     }
-                } else {
+                }catch (InputMismatchException e){
                     System.out.println("输入错误！！！");
+                    break ;
                 }
-
             }
             return dogs;
         }
